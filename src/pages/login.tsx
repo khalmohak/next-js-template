@@ -14,7 +14,7 @@ const VARIANT_COLOR = 'teal'
 function Login() {
     return (
         <Layout>
-            <Flex width='full' align='center' justifyContent='center'>
+            <Flex mt={4} width='full' align='center' justifyContent='center'>
                 <Box
                     borderWidth={1}
                     px={4}

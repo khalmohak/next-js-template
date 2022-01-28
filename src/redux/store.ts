@@ -11,7 +11,9 @@ const composeEnhancers =
         window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
 
 const enhancer = composeEnhancers(applyMiddleware(...middleware));
+const store = createStore(rootReducer, enhancer)
 
-const makeStore = () => createStore(rootReducer, enhancer)
+const makeStore = () => store
 
 export const wrapper = createWrapper(makeStore)
+export {store}

@@ -3,17 +3,22 @@ import {wrapper, store} from "../redux/store"
 import React from "react";
 import axiosInstance from "../utils/axios";
 import {setUser} from "../redux/actions/user";
+import theme from "../styles/themes";
+import {QueryClient, QueryClientProvider} from "react-query";
+
+const queryClient = new QueryClient()
 
 function MyApp({Component, pageProps}) {
+
     React.useEffect(() => {
         async function me() {
-            try{
+            try {
                 const response = await axiosInstance.get("/user/me")
-                if(response.status === 200) {
+                if (response.status === 200) {
                     // @ts-ignore
                     store.dispatch(setUser(response.data))
                 }
-            }catch (err){
+            } catch (err) {
                 console.log(err)
             }
 
@@ -23,9 +28,11 @@ function MyApp({Component, pageProps}) {
         me()
     }, [])
     return (
-        <ChakraProvider>
-            <Component {...pageProps} />
-        </ChakraProvider>
+        <QueryClientProvider client={queryClient}>
+            <ChakraProvider theme={theme}>
+                <Component {...pageProps} />
+            </ChakraProvider>
+        </QueryClientProvider>
 
     )
 }

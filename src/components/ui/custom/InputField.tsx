@@ -6,6 +6,7 @@ import {InputHTMLAttributes} from "react";
 type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
     placeholder: string;
     disabled?: boolean;
+    name: string;
     props?: any;
 };
 
@@ -15,8 +16,8 @@ const InputField: React.FC<InputFieldProps> = ({
                                                    disabled = false,
                                                    ...props
                                                }) => {
-    // @ts-ignore
-    const [field, meta] = useField(props);
+
+    const [field, meta] = useField({...props});
     const errorText = meta.error && meta.touched ? meta.error : "";
     return (
         <>

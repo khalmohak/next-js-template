@@ -6,9 +6,8 @@ import {
     Link,
     Menu,
     MenuButton,
-    MenuList
+    MenuList, useColorMode, useColorModeValue
 } from '@chakra-ui/react'
-import NavHoverBox from './NavHoverBox'
 import {useRouter} from "next/router";
 
 export default function NavItem({ icon, title, route, active }) {
@@ -23,8 +22,9 @@ export default function NavItem({ icon, title, route, active }) {
         >
             <Menu placement="right">
                 <Link
-                    backgroundColor={active && "#AEC8CA"}
+                    backgroundColor={useColorModeValue('gray.300', 'gray.700')}
                     p={3}
+                    _disabled={active}
                     borderRadius={8}
                     _hover={{ textDecor: 'none', backgroundColor: "#AEC8CA" }}
                     w={"100%"}

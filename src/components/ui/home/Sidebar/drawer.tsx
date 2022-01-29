@@ -23,8 +23,8 @@ function Sidebar(props) {
             pos="sticky"
             left="5"
             marginTop="2.5vh"
-            boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.05)"
-            borderRadius={"30px"}
+            boxShadow="md"
+            borderRadius={"5px"}
             w={"200px" }
             flexDir="column"
             justifyContent="space-between"
@@ -44,7 +44,7 @@ function Sidebar(props) {
                     mb={4}
                 >
                     <Flex mt={4} align="center">
-                        <Avatar size="sm" src="avatar-1.jpg" />
+                        <Avatar size="sm" src="" />
                         <Flex flexDir="column" ml={4} display={"flex"}>
                             <Heading as="h3" size="sm">{name}</Heading>
                             <Text color="gray">{role}</Text>
@@ -52,6 +52,7 @@ function Sidebar(props) {
                     </Flex>
                 </Flex>
                 <NavItem icon={FiHome} title="Playlists" route={'playlists'} active={true} />
+                <NavItem icon={FiHome} title="Users" route={'users'} active={true} />
 
             </Flex>
 

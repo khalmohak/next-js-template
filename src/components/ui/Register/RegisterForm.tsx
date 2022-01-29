@@ -2,7 +2,7 @@ import {Box, Button, Link} from "@chakra-ui/react";
 import React from "react";
 import {useRouter} from "next/router";
 import {Form, Formik} from 'formik'
-import InputField from "../InputField";
+import InputField from "../custom/InputField";
 import * as yup from 'yup'
 
 function RegisterForm({color}) {

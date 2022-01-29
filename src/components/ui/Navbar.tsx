@@ -1,5 +1,17 @@
 import React from "react";
-import {Box, Link, Flex, Button, Heading, Menu, MenuButton, MenuList, MenuItem} from "@chakra-ui/react";
+import {
+    Box,
+    Link,
+    Flex,
+    Button,
+    Heading,
+    Menu,
+    MenuButton,
+    MenuList,
+    MenuItem,
+    useColorMode,
+    useColorModeValue, Input
+} from "@chakra-ui/react";
 import NextLink from "next/link";
 import {useRouter} from "next/router";
 import {connect} from "react-redux"
@@ -12,14 +24,11 @@ interface NavBarProps {
 }
 
 const NavBar: React.FC<NavBarProps> = (props) => {
+    const {colorMode, toggleColorMode} = useColorMode()
     const router = useRouter();
     const {auth} = props;
-    const loading = false
     let body = null;
-    console.log(auth);
-    if (loading) {
-        // user not logged in
-    } else if (auth === false) {
+    if (auth === false) {
         body = (
             <>
                 <NextLink href="/login">
@@ -40,15 +49,22 @@ const NavBar: React.FC<NavBarProps> = (props) => {
                             <MenuButton
                                 isActive={isOpen}
                                 as={Button}
-                                // rightIcon={<CgProfile />}
                             >
                                 Profile
                             </MenuButton>
+
                             <MenuList>
-                                <MenuItem onClick={async () => {
+                                <MenuItem>
+                                    <Button onClick={toggleColorMode}>
+                                        Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
+                                    </Button>
+                                </MenuItem>
+                                <MenuItem><Button onClick={async () => {
                                     await axiosInstance.get("/auth/logout")
-                                     router.reload();
-                                }}>Logout</MenuItem>
+                                    router.reload();
+                                }}>
+                                    Logout
+                                </Button></MenuItem>
                             </MenuList>
                         </>
                     )}
@@ -58,13 +74,19 @@ const NavBar: React.FC<NavBarProps> = (props) => {
     }
 
     return (
-        <Flex zIndex={2} position="sticky" top={0} p={4} boxShadow='md' bg={'white'}>
+        <Flex zIndex={2} position="sticky" top={0} p={4} boxShadow='md'
+              bg={useColorModeValue('white', 'gray.900')}
+              color={useColorModeValue('gray.900', 'white')}
+        >
             <Flex flex={1} m="auto" align="center" maxW={800}>
                 <NextLink href="/">
                     <Link>
                         <Heading>Next JS </Heading>
                     </Link>
                 </NextLink>
+                <Box ml={"auto"}>
+                    <Input placeholder="Search" mx="auto" w={"100%"}/>
+                </Box>
                 <Box ml={"auto"}>{body}</Box>
             </Flex>
         </Flex>

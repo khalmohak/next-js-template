@@ -1,6 +1,7 @@
-import {extendTheme} from '@chakra-ui/react'
+import {extendTheme,ThemeConfig } from '@chakra-ui/react'
 
-const theme = extendTheme({
+const theme : ThemeConfig  = extendTheme({
+    initialColorMode: 'light',
     styles: {
         global: (props) => ({
             '*': {
@@ -9,16 +10,18 @@ const theme = extendTheme({
             body: {
                 overflowX: 'hidden',
                 color: props.colorMode === 'light' ? 'black' : 'white',
-                bg: props.colorMode === 'light' ? 'white' : 'black',
+                bg: props.colorMode === 'light' ? 'gray.100' : 'gray.800',
             }
         })
     },
     colors: {
         default: {
             light: '#fafafa',
-            dark: '#121212'
+            dark: 'gray.800'
         },
         primary: {},
         secondary: {},
     }
 })
+
+export default theme;

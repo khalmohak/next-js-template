@@ -1,17 +1,18 @@
-import {Box, Button, Checkbox, FormControl, FormLabel, Input, Link, Stack} from "@chakra-ui/react";
+import {Box, Button, Checkbox, FormControl, FormLabel, Input, Link, Stack, useToast} from "@chakra-ui/react";
 import React from "react";
 import {useRouter} from "next/router";
 import {Form, Formik} from "formik";
-import InputField from "../InputField";
+import InputField from "../custom/InputField";
 import * as yup from "yup";
 import axiosInstance from "../../../utils/axios";
 import {login} from "../../../redux/actions/user";
 import {connect} from "react-redux"
 
 function LoginForm(props) {
-    const {login,color} = props
+    const {login, color} = props
     const router = useRouter()
-
+    const toast = useToast()
+    const toastIdRef: React.Ref<any> = React.useRef()
     const validationSchema = yup.object({
         email: yup.string().required().email(),
         password: yup.string().min(5).required()
@@ -29,11 +30,34 @@ function LoginForm(props) {
                 validationSchema={validationSchema}
                 onSubmit={async (data, {setSubmitting}) => {
                     setSubmitting(true);
-                    const response = await axiosInstance.post('/auth/login', data);
-                    console.log(response.data);
-                    await login(response.data)
+                    try {
+                        const response = await axiosInstance.post('/auth/login', data);
+                        if (response.status === 200) {
+                            await login(response.data)
+                            //@ts-ignore
+                            toastIdRef.current = toast({
+                                title: 'Login Successful',
+                                description: 'You have successfully logged in',
+                                status: 'success',
+                                duration: 5000,
+                                isClosable: true,
+                                position: 'top-right'
+                            })
+                        }
+                    } catch (err) {
+                        //@ts-ignore
+                        toastIdRef.current = toast({
+                            title: 'Login Failed',
+                            status: 'error',
+                            duration: 5000,
+                            isClosable: true,
+                            position: 'top-right',
+                        })
+                        return;
+                    }
+
                     setSubmitting(false);
-                     await router.push('/')
+                    await router.push('/')
                 }}
             >
                 {({values, isSubmitting}) => (

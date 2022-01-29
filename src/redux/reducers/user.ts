@@ -24,7 +24,7 @@ const user = (state = {
                 name: action.payload.user_name,
                 email: action.payload.user_email,
                 role: action.payload?.user_role,
-                authLevel: action.payload?.user_auth_level,
+                authLevel: action.payload?.user_access_level,
                 avatar_url: action.payload?.user_avatar_url,
                 authenticated: true
             };
